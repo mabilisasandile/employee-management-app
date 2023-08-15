@@ -12,21 +12,21 @@
     <%- include('nav') %>
         <h2>New Employee Form</h2>
         <div class="add-emp-main-container">
-            <form>
-                <input type="text" placeholder="Enter name" />
+            <form action="/add" method="post">
+                <input type="text" placeholder="Enter name" id="name" name="name" required/>
                 <br>
-                <input type="text" placeholder="Enter surname" />
+                <input type="text" placeholder="Enter surname" id="surname" name="surname" required/>
                 <br>
-                <input type="text" placeholder="Enter ID" />
+                <input type="text" placeholder="Enter ID" id="empId" name="empId" required/>
                 <br>
-                <input type="text" placeholder="Enter address" />
+                <input type="text" placeholder="Enter address" id="address" name="address" required/>
                 <br>
-                <input type="text" placeholder="Enter position" />
+                <input type="text" placeholder="Enter position" id="position" name="position" required/>
                 <br>
-                <input type="text" placeholder="Enter phone number" />
+                <input type="text" placeholder="Enter phone number" id="phone" name="phone" required/>
                 <br>
                 <label for="image">Add image</label>
-                <input type="file" placeholder="Enter ID" />
+                <input type="file" />
                 <br>
                 <button type="submit">Save</button>
             </form>

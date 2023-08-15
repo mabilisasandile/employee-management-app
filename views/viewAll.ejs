@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>all employees</title>
+    
+</head>
+
+<body>
+    <link rel="stylesheet" href="../public/styles.css">
+
+    <%- include('nav') %>
+        <h2>List of all employees</h2>
+
+        <% if(responseArray.length> 0 ){%>
+            <% responseArray.forEach((employee)=>{%>
+
+                <div class="view-emp-card">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <img src=<%=employee.image %> alt="employee-image" />
+                                
+                                    <p><b>Name(s): </b>
+                                        <%=employee.name %>
+                                        <%=employee.surname %>
+                                    </p> <br />
+
+                                    <p><b>ID: </b>
+                                        <%=employee.empId %>
+                                    </p> <br />
+
+                                    <p><b>Address: </b>
+                                        <%=employee.address %>
+                                    </p> <br />
+                                    <p><b>Position: </b>
+                                        <%=employee.position %>
+                                    </p> <br />
+                                    <p><b>Email: </b>
+                                        <%=employee.email %>
+                                    </p> <br />
+                                    <p><b>Phone: </b>
+                                        <%=employee.phone %>
+                                    </p> <br />
+                                    <button>Edit</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <br />
+                            <br />
+                        </tbody>
+                    </table>
+                </div>
+                <% console.log("All employees: ", responseArray); %>
+        <% }) %>
+    <%}else {%>
+
+            <h2>No Employees yet</h2>
+
+    <% } %>
+
+</body>
+</html>

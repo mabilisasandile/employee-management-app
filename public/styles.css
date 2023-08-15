@@ -53,6 +53,7 @@ li a {
     place-items: center;
     width: 100%;
     float: left;
+    background-color: rgb(89, 0, 255);
 }
 
 .add-emp-main-container .form input {
@@ -75,3 +76,10 @@ li a {
     color: aliceblue;
 }
 
+.view-emp-card {
+    width: 300px;
+    height: 200px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
