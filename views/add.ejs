@@ -5,32 +5,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>add new employee</title>
-    <link rel="stylesheet" href="../public/styles.css">
+    
 </head>
 
 <body>
+    <link rel="stylesheet" href="/styles.css">
+
     <%- include('nav') %>
         <h2>New Employee Form</h2>
         <div class="add-emp-main-container">
-            <form action="/add" method="post">
-                <input type="text" placeholder="Enter name" id="name" name="name" required/>
-                <br>
-                <input type="text" placeholder="Enter surname" id="surname" name="surname" required/>
-                <br>
-                <input type="text" placeholder="Enter ID" id="empId" name="empId" required/>
-                <br>
-                <input type="text" placeholder="Enter address" id="address" name="address" required/>
-                <br>
-                <input type="text" placeholder="Enter position" id="position" name="position" required/>
-                <br>
-                <input type="text" placeholder="Enter phone number" id="phone" name="phone" required/>
-                <br>
-                <label for="image">Add image</label>
-                <input type="file" />
-                <br>
-                <button type="submit">Save</button>
-            </form>
+            <div>
+                <form action="/add" method="post">
+                    <input id="addEmpName" type="text" placeholder="Enter name" name="name" >
+                    <br>
+                    <input id="addEmpSurname" type="text" placeholder="Enter surname" name="surname" >
+                    <br>
+                    <input id="addEmpId" type="text" placeholder="Enter ID"  name="empId" >
+                    <br>
+                    <input id="addEmpAddress" type="text" placeholder="Enter address" name="address" >
+                    <br>
+                    <input id="addEmpPosition" type="text" placeholder="Enter position" name="position" >
+                    <br>
+                    <input id="addEmpEmail" type="text" placeholder="Enter email" name="email" >
+                    <br>
+                    <input id="addEmpPhone" type="text" placeholder="Enter phone number" name="phone" >
+                    <br>
+                    <label for="image">Add image</label>
+                    <input type="file" />
+                    <br>
+                    <button id="addEmpBtn" type="submit">Save</button>
+                </form>
+            </div>
         </div>
+
+        <script>
+
+            const form = document.querySelector('form')
+            const submitBtn = document.querySelector('#addEmpBtn')
+
+            submitBtn.addEventListener('click', validateForm)
+
+            function validateForm(event){
+                event.preventDefault();
+
+                const name = document.querySelector('#addEmpName');
+                const surname = document.querySelector('#addEmpSurname');
+                const empId = document.querySelector('#addEmpId');
+                const address = document.querySelector('#addEmpAddress');
+                const position = document.querySelector('#addEmpPosition');
+                const email = document.querySelector('#addEmpEmail');
+                const phone = document.querySelector('#addEmpPhone');
+
+                if (name.value.trim() === ''){
+                    alert('Please enter employee name')
+                    return false
+                }
+
+                if (surname.value.trim() === ''){
+                    alert('Please enter employee surname')
+                    return false
+                }
+
+                if (empId.value.trim() === ''){
+                    alert('Please enter employee ID number')
+                    return false
+                }
+
+                if (address.value.trim() === ''){
+                    alert('Please enter employee address')
+                    return false
+                }
+
+                if (position.value.trim() === ''){
+                    alert('Please enter employee position')
+                    return false
+                }
+
+                if (email.value.trim() === ''){
+                    alert('Please enter employee email')
+                    return false
+                }
+
+                if (phone.value.trim() === ''){
+                    alert('Please enter employee phone')
+                    return false
+                }
+
+                //If all fields are filled
+                form.submit();
+            }
+
+        </script>
 
 </body>
 

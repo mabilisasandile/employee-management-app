@@ -1,18 +1,14 @@
 
 const express = require('express');
 const app = express();
-const morgan = require('morgan')
-const path = require('path')
 const image = 'https://tse4.mm.bing.net/th?id=OIP.0CBh1Zsfm1sdsgtfpnSfSAHaHa&pid=Api&P=0&h=180';
 
 
 app.set('view engine', 'ejs');
 
-//Middleware
-app.use(morgan('dev'));
-
 //middleware to serve the static files
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static('public'));
+
 
 
 //Declare firebase admin
@@ -20,11 +16,37 @@ const admin = require("firebase-admin");
 const credentials = require("./key.json");
 
 admin.initializeApp({       //initialize admin
-    credential: admin.credential.cert(credentials)
+    credential: admin.credential.cert(credentials),
+    storageBucket: 'employee-management-app-3e6ea.appspot.com'
 });
 const db = admin.firestore()
+
+
+
+// -------image upload-------
+const multer = require('multer');
+
+// Configure Multer storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // Destination folder for uploaded files
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  }
+});
+
+// Create the Multer upload instance
+const upload = multer({ storage: storage });
+
+
+
+
+
 app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+
+// Add necessary middleware
+app.use(express.urlencoded({ extended: true })) 
 
 
 
@@ -51,7 +73,7 @@ app.get('/add', (req, res) => {
 
 //Create/add data (end point)
 app.post('/add', async (req, res) => {
-    
+
     try {
 
         const employeeData = {
@@ -65,13 +87,11 @@ app.post('/add', async (req, res) => {
         }
 
         const employeeRef = db.collection('employees');
-        const response = await employeeRef.add(employeeData).then(()=>{
-            res.redirect('add')
+        const response = await employeeRef.add(employeeData).then(() => {
+            // res.redirect('add')
+            res.status(200).send('Successfully added employee');
         })
-
-        res.send(response)
-        // Return the newly created employee's document ID
-        // res.send(`Employee added with ID: ${employeeData.id}`);
+        
 
     } catch (error) {
 
@@ -127,7 +147,7 @@ app.get('/viewall', async (req, res) => {
 
 
 //delete an employee (end point)
-app.delete('/viewall/delete/:id', async (req, res) => {
+app.delete('/delete/:id', async (req, res) => {
 
     try {
         const response = await db.collection('employees').doc(req.params.id).delete();
@@ -157,8 +177,9 @@ app.put('/update/:id', (req, res) => {
     }
 
     db.collection('employees').doc(id).update(updateData).then(() => {
-        console.log('Data updated');
-        res.send('Data updated');
+        // console.log('Data updated');
+        // res.send('Data updated');
+        alert('Successfully updated.')
     }).catch((error) => {
         console.log(error);
         res.send(error);

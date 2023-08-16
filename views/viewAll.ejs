@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>all employees</title>
-    
+    <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body>
-    <link rel="stylesheet" href="../public/styles.css">
+    
 
     <%- include('nav') %>
         <h2>List of all employees</h2>
@@ -24,33 +24,46 @@
                                 <td>
                                     <img src=<%=employee.image %> alt="employee-image" />
                                 
-                                    <p><b>Name(s): </b>
+                                    <p>
+                                        <b>Name(s): </b>
                                         <%=employee.name %>
                                         <%=employee.surname %>
-                                    </p> <br />
+                                    </p> 
+                                    <br />
 
-                                    <p><b>ID: </b>
+                                    <p>
+                                        <b>ID: </b>
                                         <%=employee.empId %>
-                                    </p> <br />
+                                    </p> 
+                                    <br />
 
-                                    <p><b>Address: </b>
+                                    <p>
+                                        <b>Address: </b>
                                         <%=employee.address %>
-                                    </p> <br />
-                                    <p><b>Position: </b>
+                                    </p> 
+                                    <br />
+
+                                    <p>
+                                        <b>Position: </b>
                                         <%=employee.position %>
-                                    </p> <br />
-                                    <p><b>Email: </b>
+                                    </p> 
+                                    <br />
+
+                                    <p>
+                                        <b>Email: </b>
                                         <%=employee.email %>
-                                    </p> <br />
-                                    <p><b>Phone: </b>
+                                    </p> 
+                                    <br />
+
+                                    <p>
+                                        <b>Phone: </b>
                                         <%=employee.phone %>
-                                    </p> <br />
-                                    <button>Edit</button>
-                                    <button>Delete</button>
+                                    </p> 
+                                    <br />
+                                    <button onclick="showPopup(<%=JSON.stringify(employee)%>)">Edit</button>
+                                    <a onclick="deleteFunction(<%=JSON.stringify(employee)%>)" data-doc= <%= employee.id %>><button>Delete</button></a>
                                 </td>
                             </tr>
-                            <br />
-                            <br />
                         </tbody>
                     </table>
                 </div>
@@ -61,6 +74,97 @@
             <h2>No Employees yet</h2>
 
     <% } %>
+
+<script>
+    function deleteFunction(results){
+        console.log(results);
+
+        const delEndpoint = `delete/${results.id}`;
+        fetch(delEndpoint,{
+            method:'DELETE'
+        }).then(()=>{
+            console.log('DELETED');
+            alert('Data Deleted!');
+        }).catch(()=>{
+            console.log(Error);
+        })
+    }
+
+    function hidePopup(){
+        document.getElementById('popup-form').style.display = 'none';
+    }
+
+    function showPopup(res){
+        console.log(res);
+        document.getElementById('popup-form').style.display = 'block';
+
+        document.getElementById('name').value = res.name;
+        document.getElementById('surname').value = res.surname;
+        document.getElementById('empId').value = res.empId;
+        document.getElementById('address').value = res.address;
+        document.getElementById('position').value = res.position;
+        document.getElementById('email').value = res.email;
+        document.getElementById('phone').value = res.phone;
+
+        document.getElementById('update-form').addEventListener('submit',()=>{
+            
+            const name = document.getElementById('name').value;
+            const surname = document.getElementById('surname').value;
+            const empId = document.getElementById('empId').value;
+            const address = document.getElementById('address').value;
+            const position = document.getElementById('position').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+
+            const data = {name, surname, empId, address, position, email, phone}
+            
+            const endpoint = `update/${res.id}`;
+            fetch(endpoint,{
+                method:'PUT',
+                headers:{'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            }).then(response=>response.json()).then((data)=>{
+                console.log('done',data);
+            }).catch((error)=>{
+                console.log(error);
+                res.status(500).send('Failed to update info!');
+            })
+
+        })
+
+    }
+
+</script>
+
+<!-- popup form -->
+<div id="popup-form" class="popup">
+
+    <div class="popup-content">
+        <span onclick="hidePopup()" class="popup-close">&times;</span>
+        <h3>Update Details</h3>
+        <form action="" id="update-form">
+            <input type="text" placeholder="Name" id="name" name="name" />
+            <br>
+            <input type="text" placeholder="Surname" id="surname" name="surname" />
+            <br>
+            <input type="text" placeholder="ID no." id="empId" name="empId" />
+            <br>
+            <input type="text" placeholder="Address" id="address" name="address" />
+            <br>
+            <input type="text" placeholder="Position" id="position" name="position" />
+            <br>
+            <input type="text" placeholder="Email" id="email" name="email" />
+            <br>
+            <input type="text" placeholder="Phone number" id="phone" name="phone" />
+            <br>
+            <label for="image">Add image</label>
+            <input type="file" />
+            <br>
+            <button type="submit" id="updateButton">Save Changes</button>
+        </form>
+
+    </div>
+</div> 
 
 </body>
 </html>
