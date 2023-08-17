@@ -82,12 +82,12 @@ li a {
 }
 
 .view-emp-card {
-    width: 300px;
+    width: 450px;
     height: 500px;
     background-color: silver;
     border-radius: 8px;
-    padding: 20px;
-    margin: 20px;
+    padding: 40px;
+    margin: 40px;
     align-content: center;
     align-items: center;
     box-shadow: -1px 5px 14px 0px rgba(0, 0, 0, 1);

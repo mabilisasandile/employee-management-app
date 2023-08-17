@@ -15,7 +15,7 @@
         <h2>New Employee Form</h2>
         <div class="add-emp-main-container">
             <div>
-                <form action="/add" method="post">
+                <form action="/add" method="post" enctype="multipart/form-data">
                     <input id="addEmpName" type="text" placeholder="Enter name" name="name" >
                     <br>
                     <input id="addEmpSurname" type="text" placeholder="Enter surname" name="surname" >
@@ -31,10 +31,11 @@
                     <input id="addEmpPhone" type="text" placeholder="Enter phone number" name="phone" >
                     <br>
                     <label for="image">Add image</label>
-                    <input type="file" />
+                    <input type="file" name="image" accept="image/*" required />
                     <br>
                     <button id="addEmpBtn" type="submit">Save</button>
                 </form>
+                
             </div>
         </div>
 
